@@ -16,22 +16,21 @@ score = {"a": 1, "c": 3, "b": 3, "e": 1, "d": 2, "g": 2,
 #
 #Sidenote corner case: if a word can be extended by another word and then another word is made off of that
 #
-
-
-
-
-
+#To-Do List:
+# - add the position of the longest word
+# - begin the integration of triple words on the board
+#
+#
+#
 
 endstring = ""
-letters = "smaoeu"
-containedletters = "o"
 finalword = []
 longest = 0
 
 
 def board():
     board = np.array([
-            ["~","~","~","~","~","~","A","~","~","~","~","~","~","~","~"],#1
+            ["~","h","e","l","~","~","a","n","d","~","~","~","~","~","~"],#1
             ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],#2
             ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],#3
             ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],#4
@@ -45,17 +44,43 @@ def board():
             ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],#12
             ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],#13
             ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],#14
-            ["~","~","~","~","~","~","~","~","~","~","~","~","A","~","~"],#15
+            ["~","~","~","~","~","~","~","~","~","~","~","~","a","~","~"],#15
             ])
-    basewords = determineBaseWords(board)
-    print(basewords)
     print(board.shape)
+    return board
 
 
 def determineBaseWords(board):
+    horizontalwords = []
+    verticalwords = []
+
+    #Horizontal Words
     for i in range(15):
+        basewords = []
+        stack = []
         for j in range(15):
-            print(board[i,j])
+            if board[i,j] != "~":
+                stack.append(board[i,j])
+            elif stack != []:
+                basewords.append(''.join(stack))
+                stack = []
+        if basewords != []:
+            horizontalwords = horizontalwords + basewords
+            
+    #Vertical Words: shifted i and j in the  board[]        
+    for i in range(15):
+        basewords = []
+        stack = []
+        for j in range(15):
+            if board[j,i] != "~":
+                stack.append(board[j,i])
+            elif stack != []:
+                basewords.append(''.join(stack))
+                stack = []
+        if basewords != []:
+            verticalwords = verticalwords + basewords     
+    
+    return horizontalwords #, verticalwords
     
 
 
@@ -77,7 +102,7 @@ def validword(string, word):
     return True
 
 
-def scrabblesearch():
+def scrabblesearch(containedletters):
     f = open('words_alpha.txt', 'r')
     highestpoints = 0
     bestword = []
@@ -86,10 +111,8 @@ def scrabblesearch():
         if containedletters in word:
             searchlist.append(word)
     searchlist = [word[:-1] for word in searchlist]
-    print(searchlist)
     for word in searchlist:
         if(validword(letters+containedletters, word)):
-            print(word)
             points = pointsmatch(word)
             if points == highestpoints:
                 bestword.append(word)
@@ -97,10 +120,18 @@ def scrabblesearch():
                 bestword = []
                 bestword.append(word)
                 highestpoints = points
-    print("longest word is " + str(bestword))
+    print("for " + containedletters + " the highest points is " + str(bestword))
     
-    
+
+if __name__ == "__main__":
+    letters = "smaoeu"
+    basewords = determineBaseWords(board())
+    print(basewords)
+    for word in basewords:
+        scrabblesearch(word)
+
+
     
         
 #scrabblesearch()
-board()
+#board()
