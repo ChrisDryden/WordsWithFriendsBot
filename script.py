@@ -54,7 +54,7 @@ class base_words:
         return len(wordlist)
 
 
-
+#global variables to adjust.
 endstring = ""
 finalword = []
 longest = 0
