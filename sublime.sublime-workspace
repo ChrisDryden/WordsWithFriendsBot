@@ -40,55 +40,11 @@
 	"buffers":
 	[
 		{
-			"contents": "# -*- coding: utf-8 -*-\n\"\"\"\nCreated on Tue Jan 23 21:43:14 2018\n\n@author: Chris Dryden\n\"\"\"\n\n#required libraries\nimport re\nimport numpy as np\n\n#additional project libraries\nimport mousecommands\nimport screencapture\n\n\nscore = {\"a\": 1, \"c\": 3, \"b\": 3, \"e\": 1, \"d\": 2, \"g\": 2, \n         \"f\": 4, \"i\": 1, \"h\": 4, \"k\": 5, \"j\": 8, \"m\": 3, \n         \"l\": 1, \"o\": 1, \"n\": 1, \"q\": 10, \"p\": 3, \"s\": 1, \n         \"r\": 1, \"u\": 1, \"t\": 1, \"w\": 4, \"v\": 4, \"y\": 4, \n         \"x\": 8, \"z\": 10}\n\n#\n#Sidenote corner case: if a word can be extended by another word and then another word is made off of that\n#\n#To-Do List:\n# - add the position of the longest word\n# - begin the integration of triple words on the board\n#\n#\n#\n\nclass base_words:\n    horizontal = False\n    word = ''\n    wordlist = []\n    coordinates = []\n    def __init__(self, list_of_characters, orientation):\n        for item in list_of_characters:\n            self.addcharacter(item)\n        self.horizontal = orientation\n        self.createword()\n    def addcharacter(self, object):\n        character = object[0]\n        x_coordinate = object[1]\n        y_coordinate = object[2]\n        self.wordlist.append(character)\n        self.coordinates.append({x_coordinate,y_coordinate})\n    def createword(self):\n        self.word = \"\".join(self.wordlist)\n    def word(self):\n        return word\n    def length(self):\n        return len(wordlist)\n\n\n#global variables to adjust.\nendstring = \"\"\nfinalword = []\nlongest = 0\n\n\ndef board():\n    board = np.array([\n            [\"~\",\"h\",\"e\",\"l\",\"~\",\"~\",\"a\",\"n\",\"d\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#1\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#2\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#3\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#4\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#5\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#6\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#7\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#8\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#9\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#10\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#11\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#12\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#13\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\"],#14\n            [\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"~\",\"a\",\"~\",\"~\"],#15\n            ])\n    print(board.shape)\n    return board\n\n\ndef board_word_points():\n    board = np.array([\n            [0,0,0,3,0,0,0,0,0,0,0,3,0,0,0],#1\n            [0,0,0,0,0,2,0,0,0,2,0,0,0,0,0],#2\n            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],#3\n            [3,0,0,0,0,0,0,2,0,0,0,0,0,0,3],#4\n            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],#5\n            [0,2,0,0,0,0,0,0,0,0,0,0,0,2,0],#6\n            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],#7\n            [0,0,0,2,0,0,0,0,0,0,0,2,0,0,0],#8\n            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],#9\n            [0,2,0,0,0,0,0,0,0,0,0,0,0,2,0],#10\n            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],#11\n            [3,0,0,0,0,0,0,2,0,0,0,0,0,0,3],#12\n            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],#13\n            [0,0,0,0,0,2,0,0,0,2,0,0,0,0,0],#14\n            [0,0,0,3,0,0,0,0,0,0,0,3,0,0,0],#15\n            ])\n    print(board.shape)\n    return board\n\n\ndef board_letter_points():\n    board = np.array([\n            [0,0,0,0,0,0,3,0,3,0,0,0,0,0,0],#1\n            [0,0,2,0,0,0,0,0,0,0,0,0,2,0,0],#2\n            [0,2,0,0,2,0,0,0,0,0,2,0,0,2,0],#3\n            [0,0,0,3,0,0,0,0,0,0,0,3,0,0,0],#4\n            [0,0,2,0,0,0,2,0,2,0,0,0,2,0,0],#5\n            [0,0,0,0,0,3,0,0,0,3,0,0,0,0,0],#6\n            [3,0,0,0,2,0,0,0,0,0,2,0,0,0,3],#7\n            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],#8\n            [3,0,0,0,2,0,0,0,0,0,2,0,0,0,3],#9\n            [0,0,0,0,0,3,0,0,0,3,0,0,0,0,0],#10\n            [0,0,2,0,0,0,2,0,2,0,0,0,2,0,0],#11\n            [0,0,0,3,0,0,0,0,0,0,0,3,0,0,0],#12\n            [0,2,0,0,2,0,0,0,0,0,2,0,0,2,0],#13\n            [0,0,2,0,0,0,0,0,0,0,0,0,2,0,0],#14\n            [0,0,0,0,0,0,3,0,3,0,0,0,0,0,0],#15\n            ])\n    print(board.shape)\n    return board\n\n\ndef determineBaseWords(board):\n    horizontalwords = []\n    verticalwords = []\n\n    #Horizontal Words\n    for i in range(15):\n        basewords = []\n        stack = []\n        for j in range(15):\n            if board[i,j] != \"~\":\n                stack.append((board[i,j], i, j))\n            elif stack != []:\n                basewords.append(stack)\n                stack = []\n        if basewords != []:\n            horizontalwords = horizontalwords + basewords\n            \n    #Vertical Words: shifted i and j in the  board[]        \n    for i in range(15):\n        basewords = []\n        stack = []\n        for j in range(15):\n            if board[j,i] != \"~\":\n                stack.append((board[j,i], i, j))\n            elif stack != []:\n                basewords.append(stack)\n                stack = []\n        if basewords != []:\n            verticalwords = verticalwords + basewords     \n    horizontalwordsobjects = []\n    verticalwordsobjects = []\n    print(\"Vertical Words\")\n    print(verticalwords)\n    print(\"Horizontal Words\")\n    print(horizontalwords)\n    for item in verticalwords:\n        objectword = base_words(item, False)\n        verticalwordsobjects.append(objectword)\n    for item in horizontalwords:\n        objectword = base_words(item, True)\n        horizontalwordsobjects.append(objectword)\n    return horizontalwordsobjects, verticalwordsobjects #, verticalwords\n    \n\n\n\ndef pointsmatch(word):\n    totalscore = 0\n    for i in list(word):\n        totalscore = totalscore +  score[i]\n    return totalscore\n\n\ndef validword(string, word):\n    letters = list(string)\n    for i in list(word):\n        if i in letters:\n            letters.remove(i)\n        else:\n            return False\n    return True\n\n\ndef scrabblesearch(containedletters):\n    f = open('words_alpha.txt', 'r')\n    highestpoints = 0\n    bestword = []\n    searchlist = []\n    for word in f:\n        if containedletters in word:\n            searchlist.append(word)\n    searchlist = [word[:-1] for word in searchlist]\n    for word in searchlist:\n        if(validword(letters+containedletters, word)):\n            points = pointsmatch(word)\n            if points == highestpoints:\n                bestword.append(word)\n            if points > highestpoints:\n                bestword = []\n                bestword.append(word)\n                highestpoints = points\n    print(\"for \" + containedletters + \" the highest points is \" + str(bestword))\n    \n\nif __name__ == \"__main__\":\n    letters = \"smaoeu\"\n    horizontal_words, verticalwords = determineBaseWords(board())\n    print(horizontal_words)\n    print(vertical_words)\n    for word in horizontalwords:\n        scrabblesearch(word)\n    for word in verticalwords:\n        scrabblesearch(word)\n\n\n\n    \n        \n#scrabblesearch()\n#board()\n",
 			"file": "script.py",
-			"file_size": 7327,
-			"file_write_time": 131619935601476445,
 			"settings":
 			{
 				"buffer_size": 7127,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "import numpy as np\nimport pandas as pd\nimport nltk\nimport re\n\n#vectorizer - \n\nfrom sklearn.feature_extraction.text import TfidfVectorizer\n\ndf = pd.read_csv('respondents.csv')\nfrom nltk.stem.snowball import SnowballStemmer\nstemmer = SnowballStemmer(\"english\")\n\n# here I define a tokenizer and stemmer which returns the set of stems in the text that it is passed\n\ndef tokenize_and_stem(text):\n    # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token\n    tokens = [word for sent in nltk.sent_tokenize(text) for word in nltk.word_tokenize(sent)]\n    filtered_tokens = []\n    # filter out any tokens not containing letters (e.g., numeric tokens, raw punctuation)\n    for token in tokens:\n        if re.search('[a-zA-Z]', token):\n            filtered_tokens.append(token)\n    stems = [stemmer.stem(t) for t in filtered_tokens]\n    return stems\n\n\ndef tokenize_only(text):\n    # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token\n    tokens = [word.lower() for sent in nltk.sent_tokenize(text) for word in nltk.word_tokenize(sent)]\n    filtered_tokens = []\n    # filter out any tokens not containing letters (e.g., numeric tokens, raw punctuation)\n    for token in tokens:\n        if re.search('[a-zA-Z]', token):\n            filtered_tokens.append(token)\n    return filtered_tokens\n\nlistofwords = []\n\ntotalvocab_stemmed = []\ntotalvocab_tokenized = []\nfor row in df.iterrows():\n    for item in row[1].values:\n        item.replace(\"'\", \"\")\n        allwords_stemmed = tokenize_and_stem(item) #for each item in 'synopses', tokenize/stem\n        totalvocab_stemmed.extend(allwords_stemmed) #extend the 'totalvocab_stemmed' list\n        allwords_tokenized = tokenize_only(item)\n        totalvocab_tokenized.extend(allwords_tokenized)\n        listofwords.append(item)\n        print(item)\n\nparsedwords = []\nfor item in listofwords:\n    parsedwords.append(str(item))\n        \nparsedwords = np.array(parsedwords)\nvocab_frame = pd.DataFrame({'words': totalvocab_tokenized}, index = totalvocab_stemmed)\n\n#define vectorizer parameters\ntfidf_vectorizer = TfidfVectorizer(max_df=0.8, max_features=200000,\n                                 min_df=0.02, stop_words='english',\n                                 use_idf=True, tokenizer=tokenize_and_stem, ngram_range=(1,3))\n\ntfidf_matrix = tfidf_vectorizer.fit_transform(parsedwords) #fit the vectorizer to synopses\n\nprint(tfidf_matrix.shape)\n\n\nterms = tfidf_vectorizer.get_feature_names()\n\nfrom sklearn.metrics.pairwise import cosine_similarity\ndist = 1 - cosine_similarity(tfidf_matrix)\nprint(dist)\n\n\nfrom sklearn.cluster import KMeans\n\nnum_clusters = 10\n\nkm = KMeans(n_clusters=num_clusters)\n\nkm.fit(tfidf_matrix)\n\nclusters = km.labels_.tolist()\n\nprint(clusters)\n\n\nprint(\"Top terms per cluster:\")\nprint()\n#sort cluster centers by proximity to centroid\norder_centroids = km.cluster_centers_.argsort()[:, ::-1] \n\nfor i in range(num_clusters):\n    print(\"Cluster %d words:\" % i, end='')\n    \n    for ind in order_centroids[i, :6]: #replace 6 with n words per cluster\n        print(' %s' % vocab_frame.ix[terms[ind].split(' ')].values.tolist()[0][0].encode('utf-8', 'ignore'), end=',')\n    print()\n    \n    \nprint()\nprint()\n",
-			"file": "/C/Users/Chris Dryden/Desktop/projects/2018/Sentiment Analysis/sentiment.py",
-			"file_size": 3340,
-			"file_write_time": 131560220860771963,
-			"settings":
-			{
-				"buffer_size": 3235,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "import os.path\nimport sys\nimport math\nimport numpy as np\nimport tensorflow as tf\nfrom flask import Flask, request, render_template, jsonify, url_for\nimport json\nimport pickle\nfrom scipy.spatial import distance\n\n app = Flask(__name__)\nworking_dir = os.getcwd() \nUPLOAD_FOLDER = working_dir + '\\\\static'\nALLOWED_EXTENSIONS = set(['jpg', 'jpeg'])\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n\n\n# Serve the homepage, a static file\n@app.route(\"/\")\ndef index():\n  return render_template('index.html')\n\n# Serve static files\n@app.route('/<path:path>')\ndef static_proxy(path):\n  # send_static_file\n  return app.send_static_file(path)\n\n@app.route('/upload', methods=['POST'])\ndef upload_file():\n    file = request.files['image']\n    print(\"Processing file: \" + file.filename)\n    f = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)\n    file.save(f)\n    img_features = {}\n\n    # Creates graph from saved graph_def.pb.\n    graph_file = working_dir + '/inception/classify_image_graph_def.pb'\n    with tf.gfile.FastGFile(graph_file, 'rb') as f:\n      graph_def = tf.GraphDef()\n      graph_def.ParseFromString(f.read())\n      _ = tf.import_graph_def(graph_def, name='')\n\n    with tf.Session() as sess:\n    #  Runs the network with the inputs of the picture.\n    # 'pool_3:0': Next to last layer before neural network\n    #  float description of the features of the image in vector form\n      last_layer = sess.graph.get_tensor_by_name('pool_3:0')\n      img_path = working_dir + '\\\\static\\\\' + file.filename\n      image_data = tf.gfile.FastGFile(img_path, 'rb').read()\n      # 'DecodeJpeg/contents:0': A tensor containing a string providing JPEG\n      #   encoding of the image.\n      features = sess.run(last_layer, {'DecodeJpeg/contents:0': image_data})\n      img_features[file.filename] = list([float(x) for x in features[0][0][0]])\n      print(\"Image completed: \" + file.filename)\n\n    with open(\"Dict.txt\", \"rb\") as my2File:\n        data = pickle.load(my2File)\n    chris = img_features[file.filename]\n    closestname = ''\n    closestvalue = 99999\n    for item in data:\n        a = chris\n        b = data[item]\n        dst = distance.euclidean(a,b)\n        if dst < closestvalue:\n            closestname = item\n            closestvalue = dst\n    print(closestname)  \n\n    imag = url_for('static', filename = closestname)\n    return render_template('index.html', invalidImage=True, imag=imag, init=True)\n\n# Run the server app\nif __name__ == \"__main__\":\n  app.debug = True\n  app.run()\n  app.run(debug = True)",
-			"file": "/C/Users/Chris Dryden/Desktop/projects/2018/Search By Convolution Unsupervised Learning/visualsearch/server.py",
-			"file_size": 2848,
-			"file_write_time": 131637171964235356,
-			"settings":
-			{
-				"buffer_size": 2502,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "import streetview\nimport requests\nfrom PIL import Image\nfrom io import BytesIO\nimport pandas\n\ncount = 0\ndf_coordinates = pandas.read_csv('potholes.csv')\nkey = 'AIzaSyAZAiJ9eB7fguVn5yAaL9nNMMrPhFNwOHI'\nheading = 0\nimage_save = 'images'\n\n\ndef api_download(panoid, heading, flat_dir, key, width=640, height=640,\n                 fov=120, pitch=0, extension='jpg', year=2018):\n    \"\"\"\n    Download an image using the official API. These are not panoramas.\n    Params:\n        :panoid: the panorama id\n        :heading: the heading of the photo. Each photo is taken with a 360\n            camera. You need to specify a direction in degrees as the photo\n            will only cover a partial region of the panorama. The recommended\n            headings to use are 0, 90, 180, or 270.\n        :flat_dir: the direction to save the image to.\n        :key: your API key.\n        :width: downloaded image width (max 640 for non-premium downloads).\n        :height: downloaded image height (max 640 for non-premium downloads).\n        :fov: image field-of-view.\n        :image_format: desired image format.\n    You can find instructions to obtain an API key here: https://developers.google.com/maps/documentation/streetview/\n    \"\"\"\n\n    fname = str(count)\n    image_format = extension if extension != 'jpg' else 'jpeg'\n\n    url = \"https://maps.googleapis.com/maps/api/streetview\"\n    params = {\n        # maximum permitted size for free calls\n        \"size\": \"%dx%d\" % (width, height),\n        \"fov\": fov,\n        \"pitch\": pitch,\n        \"heading\": heading,\n        \"pano\": panoid,\n        \"key\": key\n    }\n\n    response = requests.get(url, params=params, stream=True)\n    print(response)\n    img = Image.open(BytesIO(response.content))\n    filename = '%s/%s.%s' % (flat_dir, fname, extension)\n    print(filename)\n    img.save(filename)\n    del response\n    return img\n\n\n\nfor index, row in df_coordinates.iterrows():#['Latitude']:\n\tif count > 1000:\n\t\tbreak\n\tif count > 360:\n\t\tlat = row['Latitude']\n\t\tlon = row['Longitude']\n\t\tprint(str(row['Latitude']) + ' ' + str(row['Longitude']))\n\t\tpanoids = streetview.panoids(lat=row['Latitude'], lon=row['Longitude'], closest=True)\n\t\tprint(panoids)\n\t\ttry:\n\t\t\tpanoidvalue = panoids[0]['panoid']\n\t\t\tprint(panoidvalue)\n\t\t\tapi_download(panoid = panoidvalue, heading = heading, flat_dir = image_save, key = key)\n\n\t\texcept:\n\t\t\tprint(\"Image not found\")\n\tcount = count + 1\n\n\n#panoids = streetview.panoids(lat=40.60757818, lon=-73.95296134, closest=True)\n#print(panoids)\n\n\n'''\n\n\n\nfor item in panoids:\n\tpanoidvalue = item['panoid']\n\tprint(panoidvalue)\n\tapi_download(panoid = panoidvalue, heading = heading, flat_dir = image_save, key = key)\n\tbreak\n'''",
-			"file": "/C/Users/Chris Dryden/Desktop/projects/Data Science Hackathon/import.py",
-			"file_size": 2763,
-			"file_write_time": 131646158536491222,
-			"settings":
-			{
-				"buffer_size": 2669,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/Chris Dryden/Desktop/projects/2018/Search By Convolution Unsupervised Learning/visualsearch/output.py",
-			"settings":
-			{
-				"buffer_size": 370,
 				"line_ending": "Windows"
 			}
 		},
@@ -104,14 +60,6 @@
 			}
 		},
 		{
-			"file": "/C/Users/Chris Dryden/Desktop/projects/2018/Shopify/main.py",
-			"settings":
-			{
-				"buffer_size": 3206,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "mousecommands.py",
 			"settings":
 			{
@@ -121,12 +69,13 @@
 			}
 		},
 		{
-			"contents": "347 501\n369 523",
+			"file": "main.py",
 			"settings":
 			{
-				"buffer_size": 15,
+				"buffer_size": 300,
+				"encoding": "UTF-8",
 				"line_ending": "Windows",
-				"name": "347 501"
+				"name": "import client_wwf as WWF"
 			}
 		}
 	],
@@ -162,6 +111,12 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Chris Dryden/Desktop/projects/WordsWithFriendsBot/client_wwf",
+		"/C/Users/Chris Dryden/Desktop/projects/2018/Shopify/main.py",
+		"/C/Users/Chris Dryden/Desktop/projects/2018/Search By Convolution Unsupervised Learning/visualsearch/output.py",
+		"/C/Users/Chris Dryden/Desktop/projects/2018/Sentiment Analysis/sentiment.py",
+		"/C/Users/Chris Dryden/Desktop/projects/2018/Search By Convolution Unsupervised Learning/visualsearch/server.py",
+		"/C/Users/Chris Dryden/Desktop/projects/Data Science Hackathon/import.py",
 		"/C/Users/Chris Dryden/Desktop/projects/Data Science Hackathon/speedlimit.py",
 		"/C/UTSUCoin/CustomGenesis.json",
 		"/C/Users/Chris Dryden/Desktop/sub1.s",
@@ -171,7 +126,7 @@
 	],
 	"find":
 	{
-		"height": 59.0
+		"height": 27.0
 	},
 	"find_in_files":
 	{
@@ -227,8 +182,8 @@
 						"selection":
 						[
 							[
-								697,
-								697
+								1525,
+								1525
 							]
 						],
 						"settings":
@@ -238,128 +193,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/C/Users/Chris Dryden/Desktop/projects/2018/Sentiment Analysis/sentiment.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3235,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2925,
-								2925
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/C/Users/Chris Dryden/Desktop/projects/2018/Search By Convolution Unsupervised Learning/visualsearch/server.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2502,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								387,
-								387
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1464.0,
+						"translation.y": 3774.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "/C/Users/Chris Dryden/Desktop/projects/Data Science Hackathon/import.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2669,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2221,
-								2187
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 880.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/C/Users/Chris Dryden/Desktop/projects/2018/Search By Convolution Unsupervised Learning/visualsearch/output.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 370,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								290,
-								290
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
+					"buffer": 1,
 					"file": "screencapture.py",
 					"semi_transient": false,
 					"settings":
@@ -377,47 +218,18 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/C/Users/Chris Dryden/Desktop/projects/2018/Shopify/main.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3206,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								318,
-								318
-							]
-						],
-						"settings":
-						{
 							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 2,
 					"file": "mousecommands.py",
 					"semi_transient": false,
 					"settings":
@@ -442,35 +254,36 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 3,
+					"file": "main.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15,
+						"buffer_size": 300,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								15,
-								15
+								291,
+								291
 							]
 						],
 						"settings":
 						{
-							"auto_name": "347 501",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"auto_name": "import client_wwf as WWF",
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -515,7 +328,7 @@
 	"project": "sublime.sublime-project",
 	"replace":
 	{
-		"height": 110.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
