@@ -1,19 +1,3 @@
-# Fiend - A Python module for accessing Zynga's Words with Friends
-# Copyright (C) 2011 Jahn Veach <j@hnvea.ch>
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 VERSION = '0.3'
 
 import base64
@@ -96,29 +80,6 @@ BONUS_SQUARES = [['-', '-', '-', '$', '-', '-', '!', '-', '!', '-', '-', '$', '-
                  ['-', '-', '+', '-', '-', '=', '-', '-', '-', '=', '-', '-', '+', '-', '-'],
                  ['-', '-', '-', '$', '-', '-', '!', '-', '!', '-', '-', '$', '-', '-', '-']]
 
-# Fiend - A Python module for accessing Zynga's Words with Friends
-# Copyright (C) 2011 Jahn Veach <j@hnvea.ch>
-#
-# This file is originally based on work by Sean Perry <shalehperry@attbi.com>.
-# Source: http://mail.python.org/pipermail/python-list/2002-October/775128.html
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-# This is a pure Python implementation of the Mersenne Twister,
-# which Words with Friends uses as its random number generator.
-#
-# Mersenne Twister reference: http://en.wikipedia.org/wiki/Mersenne_twister
 
 N = 624
 M = 397
