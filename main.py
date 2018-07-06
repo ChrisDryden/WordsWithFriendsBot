@@ -1,9 +1,10 @@
 import client_wwf as WWF
+from ExternalLibraries.fiend import Fiend
 
-username = 'test'
-password = 'test'
+username = 'christopher.paul.dryden@gmail.com'
+password = 'toronto9'
 
-def main():
+def initial_main():
 	session = WWF.login(username, password)
 	data = WWF.get_games(session)
 	for item in data:
@@ -13,4 +14,15 @@ def main():
 		print(item)
 
 
-main()
+def fiend_main():
+	game = Fiend(username, password)
+	print(game.games)
+	active_games = game.activeGames
+
+	for gameID in active_games:
+		print(active_games[gameID])
+		print(active_games[gameID].letterBagCodes)
+		print(active_games[gameID].remainingLetters)
+
+
+fiend_main()
